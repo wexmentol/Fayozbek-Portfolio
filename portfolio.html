@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOFUROV FAYOZBEK — Shaxsiy Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+--bg:#050d1a;
+--bg2:#071020;
+--surface:#091428;
+  --border:#1a2a4a;
+  --accent:#21ab54;
+  --accent2:#86efac;
+  --accent3:#4ade80;
+  --text:#ffffff;
+  --muted:#7a9ab0;
+  --yellow:#facc15;
+}
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s, background 0.2s;
+    mix-blend-mode: screen;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(124,58,237,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(6,182,212,0.08) 0%, transparent 60%);
+  }
+  .grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--green);
+    margin-bottom: 32px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 .name { color: var(--text); }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .hero-sub span { color: var(--accent2); font-weight: 600; }
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 44px;
+    line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* SECTION BASE */
+  section { padding: 100px 60px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin-bottom: 60px;
+    color: var(--text);
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--surface); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .skill-card:hover::before { opacity: 1; }
+  .skill-icon { font-size: 32px; margin-bottom: 16px; }
+  .skill-name {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .skill-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .skill-bar-wrap { margin-top: 16px; }
+  .skill-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .skill-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+  .project-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .project-title {
+    font-size: 20px; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .project-desc {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: rgba(124,58,237,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag.cyan {
+    this.c=Math.random()>.5?"34,197,94":"134,239,172";
+    color: var(--accent2);
+    for(var i=0;i<130;i++)pts.push(new Pt());
+  }
+
+  /* ABOUT */
+  .about-section { background: var(--surface); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 15px; color: var(--muted); line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .stat-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 36px; font-weight: 700;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-inner {
+    max-width: 540px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-inner .section-label,
+  .contact-inner .section-title { text-align: center; }
+  .contact-desc {
+    font-size: 15px; color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .contact-link:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: var(--muted);
+  }
+  footer .logo { font-size: 14px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 70px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="logo">PENTESTER</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Ko'nikmalar</a></li>
+    <li><a href="#projects">Loyihalar</a></li>
+    <li><a href="#about">Men haqimda</a></li>
+    <li><a href="#contact">Aloqa</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <div class="status-badge">
+      <span class="status-dot"></span>
+     O'z izlanishlarim jarayonida
+    </div>
+    <h1>
+      <span class="name">GOFUROV<br>FAYOZBEK</span><br>
+      <span class="accent">Dasturchi</span>
+    </h1>
+    <p class="hero-sub">
+      <span>Python</span> &amp; <span>C++</span> dasturchi
+    </p>
+    <p class="hero-desc">
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        Loyihalarni ko'rish
+      </a>
+      <a href="#contact" class="btn-outline">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Aloqa uchun
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label"> Ko'nikmalar</div>
+  <div class="section-title">BILIM BAZASI VA KO'NIKMALARIM</div>
+
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-desc">Asosiy dasturlash tili. Algoritmlar, ma'lumotlar tuzilmasi va loyihalar uchun.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>65%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="65"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">C++</div>
+      <div class="skill-desc">Past darajali dasturlash, xotira boshqaruvi va samarali algoritmlar.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>50%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="50"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-name">Algoritmlar</div>
+      <div class="skill-desc">Saralash, qidirish, rekursiya va dinamik dasturlash masalalarini hal qilish.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>55%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="55"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">Web Asoslari</div>
+      <div class="skill-desc">HTML, CSS — veb-texnologiyalar asoslari bilan tanishish bosqichida.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>40%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="40"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-desc">Versiyalarni boshqarish, kod saqlash va hamkorlikda ishlaish asoslari.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>40%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="40"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📐</div>
+      <div class="skill-name">Ma'lumotlar Tuzilmasi</div>
+      <div class="skill-desc">Stack, queue, linked list, tree — asosiy ma'lumot tuzilmalarini o'rganish.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Darajasi</span><span>45%/</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="45"/div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label"> Loyihalar</div>
+  <div class="section-title">Mening Ishlarim</div>
+
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-num">1-LOYIHA</div>
+      <div class="project-title">UZUM MARKET REAL HISOBOTCHISI (Python)</div>Mukammal va ilmiy amallar, qulay boshqaruvli interfeys.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag cyan">CLI</span>
+        <span class="tag">OOP</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-num">2-LOYIHA</div>
+      <div class="project-title">Saralash Algoritmlari (C++)</div>
+      <div class="project-desc">C++ da yozilgan turli saralash algoritmlarini solishtiruvchi dastur. Bubble, Quick, Merge sort va ularning ishlash vaqtlari tahlili.</div>
+      <div class="project-tags">
+        <span class="tag">C++</span>
+        <span class="tag cyan">Algoritmlar</span>
+        <span class="tag">Tahlil</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-num">3-LOYIHA</div>
+      <div class="project-title">Talabalar Ma'lumotlar Bazasi</div>
+      <div class="project-desc">Python bilan yozilgan oddiy talabalar ro'yxatini boshqarish tizimi. Qo'shish, o'chirish, qidirish va fayl saqlash imkoniyatlari.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag cyan">Fayl I/O</span>
+        <span class="tag">CRUD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-title">Men haqimda qisqacha</div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Assalomu alaykum! Men <strong>GOFUROV FAYOZBEK</strong> — <strong>TATU Samarqand filiali</strong> 2-kurs talabasiman. Dasturlash sohasiga qiziqaman.</p>
+      <p>Hozirda <strong>Python</strong> va <strong>C++</strong> dasturlash tillarini mustaqil o'rganmoqdaman. Har kuni yangi bilim o'rganish va muammolarni kod orqali hal qilish meni zavqlantiradi.
+      <p>Kelajakda <strong>professional dasturchi</strong> bo'lish va yirik loyihalarda qatnashish maqsadim. Yo'lim hali uzun, lekin har bir qadam muhim! </p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat-card">
+        <span class="stat-num">2</span>
+        <div class="stat-label">TATU Samarqand</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2+</span>
+        <div class="stat-label">Dasturlash tili</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">3+</span>
+        <div class="stat-label">Kichik loyihalar</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">∞</span>
+        <div class="stat-label">O'rganish ishtiyoqi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+      <div class="section-title">ALOQA UCHUN !
+    <p class="contact-desc">
+      Hamkorlik, loyiha yoki shunchaki fikr almashish uchun yozing. Har doim javob beraman
+    </p>
+    <div class="contact-links">
+      <a href="mailto:gofurovfayozbek077@gmail.com" class="contact-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Email
+      </a>
+      <a href="https://t.me/milioner_username" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+        Telegram
+      </a>
+      <a href="https://github.com/wexmentol" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© PENTESTER
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top = e.clientY - 6 + 'px';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(3)';
+      cursor.style.background = '#06b6d4';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      cursor.style.background = '#7c3aed';
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const bar = entry.target.querySelector('.skill-bar-fill');
+        if (bar) {
+          setTimeout(() => {
+            bar.style.width = bar.dataset.width + '%';
+          }, 200);
+        }
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
